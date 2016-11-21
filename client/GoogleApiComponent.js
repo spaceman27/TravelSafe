@@ -26,7 +26,7 @@ export const wrapper = (options) => (WrappedComponent) => {
         constructor(props, context) {
             super(props, context);
 
-            this.scriptCache = createCache(options);
+            this.scriptCache = createCache(options);            
             this.scriptCache.google.onLoad(this.onLoad.bind(this))
 
             this.state = {

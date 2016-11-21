@@ -41,7 +41,6 @@ export const GoogleApi = function(opts) {
 
         return `${url}?${paramStr}`;
     }
-
     return url();
 }
 
