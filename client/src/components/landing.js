@@ -4,8 +4,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import Map, {GoogleApiWrapper} from '../../modules/map'
-import { Dropdown, Search, Grid, Header } from 'semantic-ui-react'
-
+import { Button, Dropdown, Search, Grid, Header } from 'semantic-ui-react'
+import styles from './landing.module.css'
 
 const getResults = () => _.times(5, () => ({
   title: faker.company.companyName(),
@@ -25,19 +25,23 @@ const source = _.range(0, 3).reduce((memo, index) => {
   return memo
 }, {})
 
-const CrimeTypeList = [
-'Robery', 
-'Weapon', 
-'Assault', 
-'Narcotic', 
-'Warrant Arrest', 
-'Threats', 
-'Stay out of area of drugs', 
-'Extortion', 
-'Disorderly Conduct', 
-'Shop Lifting', 
-'Pick Pocket', 
-'Burglary' ]
+const CrimeTypeList = function(){
+  return 
+  [ 
+    { value: 0, flag: 0, text: 'Robery' },
+    { value: 1, flag: '1', text: 'Weapon' },
+    { value: 2, flag: '2', text: 'Assault' },
+    { value: 3, flag: '3', text: 'Narcotic' },
+    { value: 4, flag: '4', text: 'Warrant Arrest' },
+    { value: 5, flag: '5', text: 'Threats' },
+    { value: 6, flag: '6', text: 'Stay out of area of drugs' },
+    { value: 7, flag: '7', text: 'Extortion' },
+    { value: 8, flag: '8', text: 'Disorderly Conduct' },
+    { value: 9, flag: '9', text: 'Shop Lifting' },
+    { value: 10, flag: '10', text: 'Pick Pocket' },
+    { value: 11, flag: '11', text: 'Burglary' } 
+  ]
+}();
 
 class Container extends React.Component {  
   constructor(props) {
@@ -120,27 +124,50 @@ class Container extends React.Component {
       return <div>Loading...</div>
     }
     const { isLoading, value, results } = this.state
+    
     return (
-    <div>
-      <Search
-        category
-        loading={isLoading}
-        onChange={this.handleChange}
-        onSearchChange={this.handleSearchChange}
-        results={results}
-        value={value}
-        {...this.props}
-      />
-      <Dropdown placeholder='Select Crime Type' fluid multiple search selection options={CrimeTypeList} />
-      <Map google={this.props.google}
-          style={{width: '100%', height: '100%', position: 'relative'}}
-          className={'map'}
-          zoom={14}
-          containerStyle={{}}
-          centerAroundCurrentLocation={true}
-          onClick={this.onMapClicked}
-          onDragend={this.onMapMoved} />
-      </div>
+      <table>
+      <tbody>
+        <tr style={styles.header}>
+          <td>
+            <Search 
+            category
+            placeholder='Location Name/Address and City'
+            loading={isLoading}
+            onChange={this.handleChange}
+            onSearchChange={this.handleSearchChange}
+            results={results}
+            value={value}
+            {...this.props}
+            />
+            <Dropdown placeholder='Select Crime Type' fluid multiple search selection options={CrimeTypeList} />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <Map google={this.props.google}
+            style={{width: '100%', height: '100%', position: 'relative'}}
+            className={'map'}
+            zoom={14}
+            containerStyle={{}}
+            centerAroundCurrentLocation={true}
+            onClick={this.onMapClicked}
+            onDragend={this.onMapMoved} />
+          </td>
+        </tr>
+        <tr style={styles.footer}>
+          <td >
+            <Button attached='left'> Left </Button>
+            <Button attached='right'> Right </Button>          
+          </td>
+          <td >
+            <Button circular color='facebook' icon='facebook' />
+            <Button circular color='twitter' icon='twitter' />
+            <Button circular color='google plus' icon='google plus' />
+          </td>
+        </tr>
+      </tbody>
+      </table>
     )
   }
 }

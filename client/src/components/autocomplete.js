@@ -111,4 +111,6 @@ const MapWrapper = React.createClass({
   }
 })
 
-export default MapWrapper
+export default GoogleApiWrapper({
+  apiKey: "AIzaSyD1oQ3jJcOyW9CIBmeI4rJiQR1cw2gvE7M"
+})(MapWrapper)

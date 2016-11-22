@@ -4,4 +4,4 @@ How to setup the project:
 2- run npm -g web-dev-server
 3- run npm -g webpack
 
--- add api key
+-- setup key in https://console.developers.google.com,  to allow web request
