@@ -4,7 +4,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import Map, {GoogleApiWrapper} from '../../modules/map'
-import { Button, Dropdown, Search, Grid, Header } from 'semantic-ui-react'
+import { Divider, Form, Button, Dropdown, Search, Grid, Header } from 'semantic-ui-react'
 import styles from './landing.module.css'
 
 const getResults = () => _.times(5, () => ({
@@ -25,7 +25,7 @@ const source = _.range(0, 3).reduce((memo, index) => {
   return memo
 }, {})
 
-const CrimeTypeList = function(){
+const crimeTypeList = function(){
   return 
   [ 
     { value: 0, flag: 0, text: 'Robery' },
@@ -43,7 +43,7 @@ const CrimeTypeList = function(){
   ]
 }();
 
-class Container extends React.Component {  
+class Container extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -129,20 +129,41 @@ class Container extends React.Component {
       <table>
       <tbody>
         <tr style={styles.header}>
-          <td>
-            <Search 
-            category
-            placeholder='Location Name/Address and City'
-            loading={isLoading}
-            onChange={this.handleChange}
-            onSearchChange={this.handleSearchChange}
-            results={results}
-            value={value}
-            {...this.props}
-            />
-            <Dropdown placeholder='Select Crime Type' fluid multiple search selection options={CrimeTypeList} />
+          <td>            
+            <Form>
+                <Form.Field>
+                  <Search 
+                  category
+                  placeholder='Location Name/Address and City'
+                  loading={isLoading}
+                  onChange={this.handleChange}
+                  onSearchChange={this.handleSearchChange}
+                  results={results}
+                  value={value}
+                  fluid
+                  {...this.props}
+                  />
+                  <Dropdown placeholder='Select Crime Type' fluid selection search options={crimeTypeList} />
+                </Form.Field>                
+            </Form>
           </td>
         </tr>
+        <tr style={styles.footer}>
+          <td >
+            <Grid>
+              <Grid.Column floated='left' width={5}>
+                <Button attached='left'> Left </Button>
+                <Button attached='right'> Right </Button>          
+              </Grid.Column>
+              <Grid.Column floated='right' width={5}>
+                <Button circular color='facebook' icon='facebook' />
+                <Button circular color='twitter' icon='twitter' />
+                <Button circular color='google plus' icon='google plus' />
+              </Grid.Column>
+            </Grid>            
+          </td>
+        </tr>
+
         <tr>
           <td>
             <Map google={this.props.google}
@@ -153,17 +174,6 @@ class Container extends React.Component {
             centerAroundCurrentLocation={true}
             onClick={this.onMapClicked}
             onDragend={this.onMapMoved} />
-          </td>
-        </tr>
-        <tr style={styles.footer}>
-          <td >
-            <Button attached='left'> Left </Button>
-            <Button attached='right'> Right </Button>          
-          </td>
-          <td >
-            <Button circular color='facebook' icon='facebook' />
-            <Button circular color='twitter' icon='twitter' />
-            <Button circular color='google plus' icon='google plus' />
           </td>
         </tr>
       </tbody>
